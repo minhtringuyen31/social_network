@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "friendshiprequest")
+@Table(name = "friendshiprequests")
 @NoArgsConstructor
 public class FriendshipRequestModel {
     @Id
