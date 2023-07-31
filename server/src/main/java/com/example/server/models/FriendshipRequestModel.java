@@ -1,5 +1,6 @@
 package com.example.server.models;
 
+import com.example.server.constant.Status;
 import com.example.server.repositories.FriendshipRequestRepository;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
@@ -10,12 +11,6 @@ import java.time.LocalDateTime;
 @Table(name = "friendshiprequest")
 @NoArgsConstructor
 public class FriendshipRequestModel {
-    public enum Status {
-        PENDING,
-        ACCEPTED,
-        DECLINED
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer friendshipRequestId;
@@ -29,16 +24,9 @@ public class FriendshipRequestModel {
     @Column(nullable = true)
     private String requestDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
-
-    public FriendshipRequestModel(int senderId, int receiverId){
-        String requestDate = String.valueOf(LocalDateTime.now());
-        this.senderId = senderId;
-        this.receiverId = receiverId;
-        this.requestDate = requestDate;
-        this.status = "pending";
-    }
+    private Status status;
 
     public Integer getFriendshipRequestId() {
         return friendshipRequestId;
@@ -72,18 +60,18 @@ public class FriendshipRequestModel {
         this.requestDate = requestDate;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
     @PrePersist
     private void setDefaultValues() {
         if (status == null) {
-            status = String.valueOf(Status.PENDING);
+            status =  Status.PENDING;
         }
 
         if (requestDate == null) {

@@ -10,15 +10,17 @@ public class FriendshipModel {
     private Integer friendshipId;
 
     @Column(nullable = false)
-    private Integer user_id;
+    @JoinColumn(name = "user_id")
+    private Integer userId;
 
     @Column(nullable = false)
-    private Integer friend_id;
+    @JoinColumn(name = "user_id")
+    private Integer friendId;
 
     @Column(nullable = true)
     private String friendshipDate;
 
-    public Integer getFriendshipId() {
+    public Integer getFriendShipId() {
         return friendshipId;
     }
 
@@ -26,20 +28,20 @@ public class FriendshipModel {
         this.friendshipId = friendshipId;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Integer getFriend_id() {
-        return friend_id;
+    public Integer getFriendId() {
+        return friendId;
     }
 
-    public void setFriend_id(Integer friend_id) {
-        this.friend_id = friend_id;
+    public void setFriendId(Integer friendId) {
+        this.friendId = friendId;
     }
 
     public String getFriendshipDate() {
@@ -54,10 +56,9 @@ public class FriendshipModel {
     public String toString() {
         return "FriendshipModel{" +
                 "friendshipId=" + friendshipId +
-                ", user_id=" + user_id +
-                ", friend_id=" + friend_id +
+                ", userId=" + userId +
+                ", friendId=" + friendId +
                 ", friendshipDate='" + friendshipDate + '\'' +
                 '}';
     }
-
 }
