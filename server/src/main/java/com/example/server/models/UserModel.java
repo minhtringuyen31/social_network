@@ -2,12 +2,14 @@ package com.example.server.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name="users")
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer user_id;
+    private Integer userId;
     @Column(nullable = false, length = 45)
     private String username;
     @Column(nullable = true, unique = true, length = 45)
@@ -24,11 +26,11 @@ public class UserModel {
     private String dateOfBirth;
 
     public Integer getId() {
-        return user_id;
+        return userId;
     }
 
     public void setId(Integer id) {
-        this.user_id = id;
+        this.userId = id;
     }
 
     public String getUsername() {
@@ -75,8 +77,11 @@ public class UserModel {
         return registrationDate;
     }
 
-    public void setRegistrationDate(String registrationDate) {
-        this.registrationDate = registrationDate;
+    @PrePersist
+    public void setRegistrationDate() {
+        if (registrationDate == null) {
+            registrationDate = String.valueOf(LocalDateTime.now());
+        }
     }
 
     public String getDateOfBirth() {
@@ -90,7 +95,7 @@ public class UserModel {
     @Override
     public String toString() {
         return "UserModel{" +
-                "id=" + user_id +
+                "id=" + userId +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
