@@ -2,7 +2,10 @@ package com.example.server.models;
 
 import com.example.server.constant.Role;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +15,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="users")
 public class UserModel implements UserDetails {
@@ -19,7 +25,7 @@ public class UserModel implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     @Column(nullable = false, length = 45)
-    private String username;
+    private String fullName;
     @Column(nullable = true, unique = true, length = 45)
     private String email;
     @Column(nullable = false, unique = true, length = 45)
@@ -27,11 +33,12 @@ public class UserModel implements UserDetails {
     @Column(nullable = false, length = 15)
     private String password;
     @Column(nullable = true)
-    private String profile_picture;
-    @Column(nullable = true)
-    private String registrationDate;
+    private String profilePicture;
     @Column(nullable = true)
     private String dateOfBirth;
+    @Column(nullable = true)
+    private String registrationDate;
+
 
     private Role role;
 
@@ -75,8 +82,8 @@ public class UserModel implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -99,12 +106,12 @@ public class UserModel implements UserDetails {
         this.password = password;
     }
 
-    public String getProfile_picture() {
-        return profile_picture;
+    public String getProfilePicture() {
+        return profilePicture;
     }
 
-    public void setProfile_picture(String profile_picture) {
-        this.profile_picture = profile_picture;
+    public void setProfilePicture(String profile_picture) {
+        this.profilePicture = profile_picture;
     }
 
     public String getRegistrationDate() {
@@ -130,11 +137,11 @@ public class UserModel implements UserDetails {
     public String toString() {
         return "UserModel{" +
                 "id=" + userId +
-                ", username='" + username + '\'' +
+                ", username='" + fullName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
-                ", profile_picture='" + profile_picture + '\'' +
+                ", profilePicture='" + profilePicture + '\'' +
                 ", registrationDate='" + registrationDate + '\'' +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
                 '}';
