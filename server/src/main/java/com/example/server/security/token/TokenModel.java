@@ -1,4 +1,4 @@
-package com.example.server.token;
+package com.example.server.security.token;
 
 import com.example.server.models.UserModel;
 import jakarta.persistence.*;

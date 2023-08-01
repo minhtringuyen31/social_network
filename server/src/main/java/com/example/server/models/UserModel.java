@@ -1,6 +1,7 @@
 package com.example.server.models;
 
 import com.example.server.constant.Role;
+import com.example.server.security.token.TokenModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ public class UserModel implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     @Column(nullable = false, length = 45)
+    @JoinColumn(name = "fullname")
     private String fullName;
     @Column(nullable = true, unique = true, length = 45)
     private String email;
@@ -39,8 +41,11 @@ public class UserModel implements UserDetails {
     @Column(nullable = true)
     private String registrationDate;
 
-
+    @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<TokenModel> tokens;
 
     public Integer getId() {
         return userId;

@@ -1,12 +1,12 @@
-package com.example.server.auth;
+package com.example.server.security.auth;
 
-import com.example.server.config.JwtService;
+import com.example.server.security.config.JwtService;
 import com.example.server.constant.Role;
 import com.example.server.models.UserModel;
 import com.example.server.repositories.UserRepository;
-import com.example.server.token.TokenModel;
-import com.example.server.token.TokenRepository;
-import com.example.server.token.TokenType;
+import com.example.server.security.token.TokenModel;
+import com.example.server.security.token.TokenRepository;
+import com.example.server.security.token.TokenType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class AuthenticationService {
     private final UserRepository repository;
     private final JwtService jwtService;
     private final TokenRepository tokenRepository;
+    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
 
@@ -32,7 +34,7 @@ public class AuthenticationService {
                 .fullName(request.getFullName())
                 .email(request.getEmail())
                 .phoneNumber(request.getPhoneNumber())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .profilePicture(request.getPictureProfile())
                 .dateOfBirth(request.getDateOfBirth())
                 .role(Role.USER)

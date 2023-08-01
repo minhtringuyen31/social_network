@@ -14,6 +14,7 @@ public class UserService {
     private UserRepository repository;
 
     public List<UserModel> findAll(){
+        System.out.println("User Service Find All");
         return (List<UserModel>) repository.findAll();
     }
 

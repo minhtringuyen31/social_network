@@ -1,4 +1,4 @@
-package com.example.server.auth;
+package com.example.server.security.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.server.config;
+package com.example.server.security.config;
 
 import com.example.server.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -3,6 +3,7 @@ package com.example.server.controllers;
 import com.example.server.models.UserModel;
 import com.example.server.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +23,9 @@ public class UserController {
     }
 
     @GetMapping
-    public Optional<UserModel> findOne (@RequestParam("id") int id){
+    public ResponseEntity<Optional<UserModel>> findOne (@RequestParam("id") int id){
         Optional<UserModel> user = service.findOne(id);
-        return user;
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping
