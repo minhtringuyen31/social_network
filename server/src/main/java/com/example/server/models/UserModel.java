@@ -26,8 +26,11 @@ public class UserModel implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     @Column(nullable = false, length = 45)
-    @JoinColumn(name = "fullname")
-    private String fullName;
+    @JoinColumn(name = "first_name")
+    private String firstName;
+    @Column(nullable = true, length = 45)
+    @JoinColumn(name = "last_name")
+    private String lastName;
     @Column(nullable = true, unique = true, length = 45)
     private String email;
     @Column(nullable = false, unique = true, length = 45)
@@ -87,42 +90,6 @@ public class UserModel implements UserDetails {
         return true;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getProfilePicture() {
-        return profilePicture;
-    }
-
-    public void setProfilePicture(String profile_picture) {
-        this.profilePicture = profile_picture;
-    }
-
-    public String getRegistrationDate() {
-        return registrationDate;
-    }
-
     @PrePersist
     public void setRegistrationDate() {
         if (registrationDate == null) {
@@ -130,25 +97,20 @@ public class UserModel implements UserDetails {
         }
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     @Override
     public String toString() {
         return "UserModel{" +
-                "id=" + userId +
-                ", username='" + fullName + '\'' +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
                 ", profilePicture='" + profilePicture + '\'' +
-                ", registrationDate='" + registrationDate + '\'' +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", registrationDate='" + registrationDate + '\'' +
+                ", role=" + role +
+                ", tokens=" + tokens +
                 '}';
     }
 }
