@@ -24,24 +24,23 @@ import java.util.List;
 public class UserModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer userId;
-    @Column(nullable = false, length = 45)
-    @JoinColumn(name = "first_name")
+    @Column(name = "firstname",nullable = false, length = 45)
     private String firstName;
-    @Column(nullable = true, length = 45)
-    @JoinColumn(name = "last_name")
+    @Column(name = "lastname", nullable = true, length = 45)
     private String lastName;
-    @Column(nullable = true, unique = true, length = 45)
+    @Column(name = "email", nullable = true, unique = true, length = 45)
     private String email;
-    @Column(nullable = false, unique = true, length = 45)
+    @Column(name = "phone_number", nullable = false, unique = true, length = 45)
     private String phoneNumber;
-    @Column(nullable = false, length = 15)
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
-    @Column(nullable = true)
+    @Column(name = "profile_picture", nullable = true, length = 255)
     private String profilePicture;
-    @Column(nullable = true)
+    @Column(name = "date_of_birth", nullable = true)
     private String dateOfBirth;
-    @Column(nullable = true)
+    @Column(name = "registration_date", nullable = true)
     private String registrationDate;
 
     @Enumerated(EnumType.STRING)
@@ -49,14 +48,6 @@ public class UserModel implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<TokenModel> tokens;
-
-    public Integer getId() {
-        return userId;
-    }
-
-    public void setId(Integer id) {
-        this.userId = id;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -110,7 +101,6 @@ public class UserModel implements UserDetails {
                 ", dateOfBirth='" + dateOfBirth + '\'' +
                 ", registrationDate='" + registrationDate + '\'' +
                 ", role=" + role +
-                ", tokens=" + tokens +
                 '}';
     }
 }

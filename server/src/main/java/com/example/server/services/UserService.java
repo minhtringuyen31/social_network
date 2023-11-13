@@ -23,6 +23,7 @@ public class UserService {
     }
 
     public UserModel createNewUser(UserModel user){
+
         return repository.save(user);
     }
 }

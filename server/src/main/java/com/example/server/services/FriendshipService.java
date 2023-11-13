@@ -28,8 +28,8 @@ public class FriendshipService {
         request.setStatus(Status.ACCEPTED);
 
         FriendshipModel friendshipModel = new FriendshipModel();
-        friendshipModel.setUserId(request.getSenderId());
-        friendshipModel.setFriendId(request.getReceiverId());
+        friendshipModel.setFirstUser(request.getSenderId());
+        friendshipModel.setSecondUser(request.getReceiverId());
         friendshipModel.setFriendshipDate(String.valueOf(LocalDateTime.now()));
 
         friendshipRepository.save(friendshipModel);
@@ -44,7 +44,7 @@ public class FriendshipService {
     }
 
     public void requestUnFriendship(FriendshipModel request){
-        FriendshipModel friendship = friendshipRepository.findFriendshipByUserIdAndFriendId(request.getUserId(), request.getFriendId());
+        FriendshipModel friendship = friendshipRepository.findFriendshipByUserIdAndFriendId(request.getFirstUser(), request.getSecondUser());
         friendshipRepository.delete(friendship);
     }
 }

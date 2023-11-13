@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("/api/v1/user")
 public class UserController {
     @Autowired
     private UserService service;
 
     @GetMapping("/all")
-    public List<UserModel> findAll(){
+    public ResponseEntity<List<UserModel>> findAll(){
         List<UserModel> listUsers = service.findAll();
-        System.out.println(listUsers.toString());
-        return listUsers;
+        System.out.println("hereeeeeee: "+ listUsers);
+        return ResponseEntity.ok(listUsers);
     }
 
     @GetMapping

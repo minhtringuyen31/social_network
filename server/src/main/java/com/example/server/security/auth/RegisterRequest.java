@@ -17,5 +17,4 @@ public class RegisterRequest {
     private String password;
     private String pictureProfile;
     private String dateOfBirth;
-
 }

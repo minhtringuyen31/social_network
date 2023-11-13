@@ -14,8 +14,11 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../state";
-import Dropzone from "react-dom";
+import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
+
+// import dotenv from "dotenv";
+// dotenv.config();
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -36,6 +39,7 @@ const initialValuesRegister = {
   lastName: "",
   email: "",
   phoneNumber: "",
+  password: "",
   profilePicture: "",
   dateOfBirth: "",
 };
@@ -54,7 +58,10 @@ const Form = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
+  // const apiUrl = process.env.REACT_APP_API_URL;
+
   const register = async (values, onSubmitProps) => {
+    console.log("Login information");
     // this allows us to send form info with image
     const formData = new FormData();
     for (let value in values) {
@@ -62,42 +69,41 @@ const Form = () => {
     }
     formData.append("picturePath", values.profilePicture.name);
 
-    const savesUserResponse = await fetch(
-      "http://localhost:8080/api/v1/auth/register",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-    const savedUser = await savesUserResponse.json();
-    onSubmitProps.resetForm();
+    // const savesUserResponse = await fetch(
+    //   "http://localhost:8080/api/v1/auth/register",
+    //   {
+    //     method: "POST",
+    //     body: formData,
+    //   }
+    // );
+    // const savedUser = await savesUserResponse.json();
+    // onSubmitProps.resetForm();
 
-    if (savedUser) {
-      setPageType("login");
-    }
+    // if (savedUser) {
+    //   setPageType("login");
+    // }
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch(
-      "http://localhost:8080/api/v1/auth/login",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      }
-    );
-    const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm();
-    if (loggedIn) {
-      dispatch(
-        setLogin({
-          user: loggedIn.user,
-          accessToken: loggedIn.accessToken,
-          refreshToken: loggedIn.refreshToken,
-        })
-      );
-      navigate("/home");
-    }
+    // console.log("Login information");
+    // const loggedInResponse = await fetch(`${apiUrl}/auth/authenticate`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(values),
+    // });
+    // const loggedIn = await loggedInResponse.json();
+    // onSubmitProps.resetForm();
+    // if (loggedIn) {
+    //   dispatch(
+    //     setLogin({
+    //       user: loggedIn.user,
+    //       accessToken: loggedIn.accessToken,
+    //       refreshToken: loggedIn.refreshToken,
+    //     })
+    //   );
+    //   navigate("/home");
+    // }
+    navigate("/home");
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
@@ -125,7 +131,7 @@ const Form = () => {
           <Box
             display="grid"
             gap="30px"
-            gridTemplateColumns="repeat(4, minmax(0,1fr)"
+            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
             }}
@@ -158,14 +164,52 @@ const Form = () => {
                   label="Phone Number"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.location}
+                  value={values.phoneNumber}
                   name="location"
-                  error={Boolean(touched.location) && Boolean(errors.location)}
-                  helperText={touched.location && errors.location}
+                  error={
+                    Boolean(touched.phoneNumber) && Boolean(errors.phoneNumber)
+                  }
+                  helperText={touched.phoneNumber && errors.phoneNumber}
                   sx={{ gridColumn: "span 4" }}
                 />
+                <Box
+                  gridColumn="span 4"
+                  border={`1px solid ${palette.neutral.medium}`}
+                  borderRadius="5px"
+                  p="1rem"
+                >
+                  <Dropzone
+                    acceptedFiles=".jpg,.jpeg,.png"
+                    multiple={false}
+                    onDrop={(acceptedFiles) =>
+                      setFieldValue("profilePicture", acceptedFiles[0])
+                    }
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <Box
+                        {...getRootProps()}
+                        border={`2px dashed ${palette.primary.main}`}
+                        p="1rem"
+                        sx={{ "&:hover": { cursor: "pointer" } }}
+                      >
+                        <input {...getInputProps()} />
+                        {!values.profilePicture ? (
+                          <p>Add Picture Here</p>
+                        ) : (
+                          <FlexBetween>
+                            <Typography>
+                              {values.profilePicture.name}
+                            </Typography>
+                            <EditOutlinedIcon />
+                          </FlexBetween>
+                        )}
+                      </Box>
+                    )}
+                  </Dropzone>
+                </Box>
               </>
             )}
+
             <TextField
               label="Email"
               onBlur={handleBlur}
@@ -188,6 +232,7 @@ const Form = () => {
               sx={{ gridColumn: "span 4" }}
             />
           </Box>
+
           {/* BUTTONS */}
           <Box>
             <Button

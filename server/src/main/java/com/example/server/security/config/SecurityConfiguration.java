@@ -37,14 +37,13 @@ public class SecurityConfiguration {
 //                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .csrf(httpSecurityCsrfConfigurer -> {
-                    // Customize CSRF protection as needed
                     httpSecurityCsrfConfigurer.disable(); // Disable CSRF protection
                     // You can customize further settings, like token repository, etc.
                 })
                 .authorizeRequests(authorize -> {
                     // Your authorization rules here
                     authorize
-                            .requestMatchers("/api/v1/auth/**","/api/v1/user/**").permitAll()
+                            .requestMatchers("/api/v1/auth/**","/api/v1/user/**", "/api/v1/test/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session

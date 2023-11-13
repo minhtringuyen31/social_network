@@ -30,4 +30,15 @@ public class TokenModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     public UserModel user;
+
+    @Override
+    public String toString() {
+        return "TokenModel{" +
+                "tokenId=" + tokenId +
+                ", token='" + token + '\'' +
+                ", tokenType=" + tokenType +
+                ", revoked=" + revoked +
+                ", expired=" + expired +
+                '}';
+    }
 }
