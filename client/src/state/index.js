@@ -4,17 +4,15 @@ const initialState = {
   mode: "light",
   user: {
     _id: 1,
-    firstName: "Leo",
+    firstName: "Leooooo",
     lastName: "Messi",
     email: "leomessi@gmail.com",
-    phoneNumber: "0111111111",
+    phoneNumber: "99999999",
     profilePicture:
-      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.nydailynews.com%2Fsports%2Fsoccer%2Fny-lionel-messi-world-cup-final-20221218-nca3anmsvjajzkvp2u6ahfpzoi-story.html&psig=AOvVaw1GPtdpw6sz1ClfhubfldvB&ust=1691052454092000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJjXqbjLvYADFQAAAAAdAAAAABAJ",
+      "https://i.pinimg.com/564x/e9/f1/ac/e9f1ac1be3e35d62c72f2118af3da92d.jpg",
     dateOfBrith: "26-06-1987",
   },
-  // user: null,
-  accessToken: null,
-  refreshToken: null,
+  token: null,
   posts: [],
 };
 
@@ -27,13 +25,11 @@ export const authSlice = createSlice({
     },
     setLogin: (state, action) => {
       state.user = action.payload.user;
-      state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
+      state.token = action.payload.token;
     },
     setLogout: (state) => {
       state.user = null;
-      state.accessToken = null;
-      state.refreshToken = null;
+      state.token = null;
     },
     setFriends: (state, action) => {
       if (state.user) {
